@@ -31,7 +31,7 @@ export function processAddPage(req, res, next) {
      * ADD CODE HERE *
      *****************/
 
-    let newBooks = booksModel({
+    let newBook = booksModel({
         name: req.body.name,
         author: req.body.author,
         published: req.body.published,
@@ -39,7 +39,7 @@ export function processAddPage(req, res, next) {
         price: req.body.price
     });
 
-    booksModel.create(newBooks, (err, Books) => {
+    booksModel.create(newBook, (err, Books) => {
         if(err){
             console.error(err);
             res.end(err);
@@ -57,7 +57,7 @@ export function displayEditPage(req, res, next) {
      *****************/
      let id = req.params.id;
 
-     contactsModel.findById(id, (err, contacts) => {
+     booksModel.findById(id, (err, contacts) => {
          if(err){
              console.error(err);
              res.end(err);
@@ -76,7 +76,7 @@ export function processEditPage(req, res, next) {
 
      let id = req.params.id;
 
-     let newBooks = booksModel({
+     let newBook = booksModel({
         name: req.body.name,
         author: req.body.author,
         published: req.body.published,
@@ -84,8 +84,8 @@ export function processEditPage(req, res, next) {
         price: req.body.price
     });
 
-    //update in db
-    booksModel.updateOne({_id: id }, newBooks, (err, Books) => {
+    //update in mongodb
+    booksModel.updateOne({_id: id }, newBook, (err, Books) => {
         if(err){
             console.error(err);
             res.end(err);
@@ -93,8 +93,6 @@ export function processEditPage(req, res, next) {
 
         res.redirect('./list')//after editing a book redirect to book list
     })
-
-
 }
 
 // GET - process the delete by user id
@@ -105,16 +103,12 @@ export function processDelete(req, res, next) {
 
 let id = req.params.id;
 
-booksModel.remove({_id: id}, (err) => {
+booksModel.deleteOne({_id: id}, (err) => {
     if(err){
         console.error(err);
         res.end(err);
     }
 
-    res.redirect('./list')//after removing a book redirect to book list
-
+    res.redirect('../list')//after removing a book redirect to book list
 })
-
-
-
 }
