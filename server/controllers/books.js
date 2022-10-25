@@ -45,7 +45,7 @@ export function processAddPage(req, res, next) {
             res.end(err);
         };
 
-        res.redirect('books/list')//after adding a book redirect to book list
+        res.redirect('./list')//after adding a book redirect to book list
     })
 }
 
