@@ -21,7 +21,7 @@ export function displayAddPage(req, res, next) {
     * ADD CODE HERE *
     *****************/
 
-     res.render('index', { title: 'Add Book', page: 'books/add', books: {},});
+     res.render('index', { title: 'Add Book', page: 'books/add', books: {} });
 }
 
 // POST process the Book Details page and create a new Book - CREATE
@@ -55,14 +55,46 @@ export function displayEditPage(req, res, next) {
     /*****************
      * ADD CODE HERE *
      *****************/
+     let id = req.params.id;
 
-}
+     contactsModel.findById(id, (err, contacts) => {
+         if(err){
+             console.error(err);
+             res.end(err);
+         }
+ 
+         res.render('index', { title: 'Edit Book', page: 'books/edit', books: books });
+     });   
+        
+    }
 
 // POST - process the information passed from the details form and update the document
 export function processEditPage(req, res, next) {
     /*****************
     * ADD CODE HERE *
     *****************/
+
+     let id = req.params.id;
+
+     let newBooks = booksModel({
+        name: req.body.name,
+        author: req.body.author,
+        published: req.body.published,
+        description: req.body.description,
+        price: req.body.price
+    });
+
+    //update in db
+    booksModel.updateOne({_id: id }, newBooks, (err, Books) => {
+        if(err){
+            console.error(err);
+            res.end(err);
+        };
+
+        res.redirect('./list')//after editing a book redirect to book list
+    })
+
+
 }
 
 // GET - process the delete by user id
@@ -70,4 +102,19 @@ export function processDelete(req, res, next) {
     /*****************
   * ADD CODE HERE *
   *****************/
+
+let id = req.params.id;
+
+booksModel.remove({_id: id}, (err) => {
+    if(err){
+        console.error(err);
+        res.end(err);
+    }
+
+    res.redirect('./list')//after removing a book redirect to book list
+
+})
+
+
+
 }
