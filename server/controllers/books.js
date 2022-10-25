@@ -1,4 +1,5 @@
 // define the book model
+import books from '../models/books.js';
 import booksModel from '../models/books.js';
 
 /* GET books List page. READ */
@@ -19,6 +20,8 @@ export function displayAddPage(req, res, next) {
     /*****************
     * ADD CODE HERE *
     *****************/
+
+     res.render('index', { title: 'Add Book', page: 'books/add', books: {},});
 }
 
 // POST process the Book Details page and create a new Book - CREATE
@@ -27,6 +30,23 @@ export function processAddPage(req, res, next) {
     /*****************
      * ADD CODE HERE *
      *****************/
+
+    let newBooks = booksModel({
+        name: req.body.name,
+        author: req.body.author,
+        published: req.body.published,
+        description: req.body.description,
+        price: req.body.price
+    });
+
+    booksModel.create(newBooks, (err, Books) => {
+        if(err){
+            console.error(err);
+            res.end(err);
+        };
+
+        res.redirect('books/list')//after adding a book redirect to book list
+    })
 }
 
 // GET the Book Details page in order to edit an existing Book
