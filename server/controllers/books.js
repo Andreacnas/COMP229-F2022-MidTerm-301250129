@@ -57,7 +57,7 @@ export function displayEditPage(req, res, next) {
      *****************/
      let id = req.params.id;
 
-     booksModel.findById(id, (err, contacts) => {
+     booksModel.findById(id, (err, books) => {
          if(err){
              console.error(err);
              res.end(err);
@@ -77,6 +77,7 @@ export function processEditPage(req, res, next) {
      let id = req.params.id;
 
      let newBook = booksModel({
+        _id: req.body.id,
         name: req.body.name,
         author: req.body.author,
         published: req.body.published,
@@ -91,7 +92,7 @@ export function processEditPage(req, res, next) {
             res.end(err);
         };
 
-        res.redirect('./list')//after editing a book redirect to book list
+        res.redirect('../list')//after editing a book redirect to book list
     })
 }
 
