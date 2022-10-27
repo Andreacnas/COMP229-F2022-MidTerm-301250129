@@ -1,4 +1,4 @@
-// Config JS file - Date: Oct xxth, 2022
+// config.js - Date: Oct 26th, 2022
 // Name: Andrea Cavalcanti Nascimento - Student Number: 301250129
 //Favourite Book List (Mid-Term test)
 

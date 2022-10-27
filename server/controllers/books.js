@@ -1,3 +1,7 @@
+// books.js - Date: Oct 26th, 2022
+// Name: Andrea Cavalcanti Nascimento - Student Number: 301250129
+//Favourite Book List (Mid-Term test)
+
 // define the book model
 import books from '../models/books.js';
 import booksModel from '../models/books.js';
@@ -11,7 +15,7 @@ export function displayBookList(req, res, next) {
             res.end(err);
         }
         res.render('index', { title: 'Book List', page: 'books/list', books: booksCollection });
-    });
+    }).sort({"name":1});//Sort list by name
 }
 
 //  GET the Book Details page in order to add a new Book
@@ -62,7 +66,7 @@ export function displayEditPage(req, res, next) {
              console.error(err);
              res.end(err);
          }
- 
+         
          res.render('index', { title: 'Edit Book', page: 'books/edit', books: books });
      });   
         
